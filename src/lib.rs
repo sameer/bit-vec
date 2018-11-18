@@ -89,6 +89,11 @@
 #![cfg_attr(all(test, feature = "nightly"), feature(test))]
 #[cfg(all(test, feature = "nightly"))] extern crate test;
 #[cfg(all(test, feature = "nightly"))] extern crate rand;
+#[cfg(feature="serde")]
+extern crate serde;
+#[cfg(feature="serde")]
+#[macro_use]
+extern crate serde_derive;
 
 #[cfg(any(test, feature = "std"))]
 #[macro_use]
@@ -211,6 +216,7 @@ static FALSE: bool = false;
 /// println!("{:?}", bv);
 /// println!("total bits set to true: {}", bv.iter().filter(|x| *x).count());
 /// ```
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct BitVec<B=u32> {
     /// Internal representation of the bit vector
     storage: Vec<B>,
